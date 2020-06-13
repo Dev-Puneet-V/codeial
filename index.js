@@ -17,3 +17,6 @@ app.listen(port, function(err){
 
     console.log(`Server is running on port: ${port}`);
 });
+
+// case sensitive routing - Enable case sensitivity, disabled by default, treating "/Foo" and "/foo" as the same
+// app.set('case sensitive routing', true);
