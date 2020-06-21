@@ -4,6 +4,7 @@ const port = 8000;
 
 //use expree-ejs-layout for loading layout.ejs file by default-> thgis is for layout -> npm install express-ejs-layouts
 const expressLayout = require('express-ejs-layouts');
+const db = require('./config/mongoose');
 app.use(express.static('./assets'));
 app.use(expressLayout);
 
