@@ -4,8 +4,12 @@ const port = 8000;
 
 //use expree-ejs-layout for loading layout.ejs file by default-> thgis is for layout -> npm install express-ejs-layouts
 const expressLayout = require('express-ejs-layouts');
+app.use(express.static('./assets'));
 app.use(expressLayout);
 
+// extract style and scripts from sub pages into the layout.ejs file otherwise the link files of css comes under head 
+app.set('layout extractStyles', true);
+app.set('layout extractScripts', true);
 
 //use express router
 app.use('/', require('./routes'));//middleware
