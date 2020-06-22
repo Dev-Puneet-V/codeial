@@ -5,7 +5,5 @@ const homeController = require('../controllers/home_controller');
 console.log("router loaded");
 router.get('/', homeController.home);
 router.use('/users', require('./users'));
-router.use('/login', require('./login'));
 router.use('/posts', require('./posts'));
-router.use('/register', require('./register'));
 module.exports = router;//here we can't write only exports, module is neccessary

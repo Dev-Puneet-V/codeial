@@ -1,13 +1,16 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const app = express();
 const port = 8000;
 
 //use expree-ejs-layout for loading layout.ejs file by default-> thgis is for layout -> npm install express-ejs-layouts
 const expressLayout = require('express-ejs-layouts');
 const db = require('./config/mongoose');
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));//used to get encoded data due to the post request
 app.use(express.static('./assets'));
 app.use(expressLayout);
+
+app.use(cookieParser());
 
 // extract style and scripts from sub pages into the layout.ejs file otherwise the link files of css comes under head 
 app.set('layout extractStyles', true);
