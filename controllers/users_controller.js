@@ -79,3 +79,12 @@ module.exports.createSession = function(req, res){
       }
    });
 }
+
+//sign out and delete a session for user
+module.exports.deleteSession = function(req, res){
+   ///find the user
+   console.log(req.cookies.user_id);
+   res.clearCookie('user_id');
+   return res.redirect('/users/sign-in');
+}
+
