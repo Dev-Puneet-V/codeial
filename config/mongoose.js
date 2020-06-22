@@ -1,16 +1,12 @@
-//getting started mongoose
 const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/codeial_development');
 
-//connect to db
-mongoose.connect('mongodb://localhost/socialDb');
+const db = mongoose.connection;
 
-//acquire connection to check if it is successfull
-var db = mongoose.connection;
+db.on('error', console.error.bind(console, "Error connecting to MongoDB"));
 
-//error
-db.on('error', console.error.bind(console, 'connection error:'));
-
-//up and running then print message
 db.once('open', function(){
-    console.log("Successfully connected to the database");
+    console.log('Connected to Database :: MongoDB');
 });
+
+module.exports = db;
