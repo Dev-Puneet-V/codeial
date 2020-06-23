@@ -34,9 +34,11 @@ module.exports.create = function(req, res){
          //data saved in db is according to schema
          User.create(req.body, function(err, user){
             if(err){ console.log("error in creating user"); return;}
+            console.log('user created')
             return res.redirect('/users/sign-in');
          });
       }else{
+         console.log("user already exists")
          return res.redirect('back');
       }
    });
@@ -45,5 +47,5 @@ module.exports.create = function(req, res){
 
 //sign in and create a session for user
 module.exports.createSession = function(req, res){
-   //TO DO Later
+   return res.redirect('/')
 }

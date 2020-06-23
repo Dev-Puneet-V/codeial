@@ -6,6 +6,13 @@ const port = 8000;
 //use expree-ejs-layout for loading layout.ejs file by default-> thgis is for layout -> npm install express-ejs-layouts
 const expressLayout = require('express-ejs-layouts');
 const db = require('./config/mongoose');
+
+//used for session cookie
+const session = require('express-session');//it is helping to automatically encrypt cookie
+const  passport = require('passport');
+const passportLocal = require('./config/passport-local-strategy');
+
+
 app.use(express.urlencoded({ extended: false }));//used to get encoded data due to the post request
 app.use(express.static('./assets'));
 app.use(expressLayout);
@@ -15,12 +22,29 @@ app.use(cookieParser());
 // extract style and scripts from sub pages into the layout.ejs file otherwise the link files of css comes under head 
 app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
-//use express router
-app.use('/', require('./routes'));//middleware
+
 
 // set up the view engine
 app.set('view engine', 'ejs');
 app.set('views', './views');
+
+app.use(session({
+    name: 'codeial',
+    //TODO change the secret before deployment in production mode
+    secret: 'blahsomething',
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+        maxAge: (1000 * 60  * 100)
+    }
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+//use express router
+app.use('/', require('./routes'));//middleware
+
 //Start server
 app.listen(port, function(err){
     if(err){
