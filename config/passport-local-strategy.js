@@ -1,3 +1,5 @@
+// https://mianlabs.com/2018/05/09/understanding-sessions-and-local-authentication-in-express-with-passport-and-mongodb/#:~:text=Using%20Sessions%20with%20Passport&text=It%20then%20serializes%20the%20provided,or%20retrieve%20the%20User%20model.
+
 const passport = require('passport');
 
 const LocalStrategy = require('passport-local').Strategy;
@@ -11,7 +13,7 @@ passport.use(new LocalStrategy({
     //here 'done' is function which is reporting back to passport.js
     //whenever passport is called function(email, passwords, done) is automatically called
     function(email, password, done){
-        //find a user and establich the idenity
+        //find a user and establish the idenity
         User.findOne({email: email}, function(err, user){
             if(err){
                 console.log('Error in finding user --> Passport');

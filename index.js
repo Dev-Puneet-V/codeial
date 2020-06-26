@@ -12,9 +12,17 @@ const session = require('express-session');//it is helping to automatically encr
 const  passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 
-const MongoStore = require('connect-mongo')(session);//an argument(session), the express session
+const MongoStore = require('connect-mongo')(session);//an argument(session), the express session, here it is used for storing the session cookies in DB
 
-
+//using sass
+const sassMiddleware = require('node-sass-middleware');
+app.use(sassMiddleware({
+    src: './assets/scss',//from where do i pick up scss file to convergt into css
+    dest: './assets/css',//where i need to put my css file
+    debug: true,//do i wnat to show some error when some file is not converted
+    outputStyle: 'extended',//To keep file text in which format
+    prefix: '/css'//where should my server should look for css file
+}));
 
 app.use(express.urlencoded({ extended: false }));//used to get encoded data due to the post request
 app.use(express.static('./assets'));
@@ -33,6 +41,7 @@ app.set('views', './views');
 
 
 // mongo store is used to store the session cookie in the db
+//express-session
 app.use(session({
     name: 'codeial',
     //TODO change the secret before deployment in production mode
