@@ -6,13 +6,13 @@ const postSchema = new mongoose.Schema({
         required: true
     },
 
-    //this is used for connecting with unique users with their Unique Id 
+   
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+         ref: 'User' 
     }
 },{
-    timestamps: true //used for getting time at which the row is added
+    timestamps: true 
 });
 
 const Post = mongoose.model('Post', postSchema);
