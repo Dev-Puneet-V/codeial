@@ -6,13 +6,13 @@ const postSchema = new mongoose.Schema({
         required: true
     },
 
-   
+    //this is used for connecting with unique users with their Unique Id 
     user: {
         type: mongoose.Schema.Types.ObjectId,
-         ref: 'User' 
+         ref: 'User' //ref option is what tells Mongoose which model to use during population
     }
 },{
-    timestamps: true 
+    timestamps: true //used for getting time at which the row is added
 });
 
 const Post = mongoose.model('Post', postSchema);
