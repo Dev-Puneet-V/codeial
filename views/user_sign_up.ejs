@@ -1,9 +1,11 @@
-
+<link rel="stylesheet" href="/css/user_sign_up.css">
 <h1> <%= title %></h1>
-<form action="/users/create" method="Post">
-    <input name="name" placeholder="Name..." type="text" required><br>
-    <input name="email" placeholder="Email..." type="email" required><br>
-    <input name="password" placeholder="Password..." type="password" required><br>
-    <input name="confirm_password" placeholder="Re-Enter Password..." type="password" required><br>
-    <button type="submit">Register!</button>
-</form>
+<div>
+    <form action="/users/create" method="Post">
+        <input name="name" placeholder="Name..." type="text" required><br>
+        <input name="email" placeholder="Email..." type="email" required><br>
+        <input name="password" placeholder="Password..." type="password" required><br>
+        <input name="confirm_password" placeholder="Re-Enter Password..." type="password" required><br>
+        <button type="submit">Register!</button>
+    </form>
+</div>

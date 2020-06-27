@@ -1,0 +1,20 @@
+header {
+  height: 50px;
+  padding: 5px;
+  background-color: blue;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 2px 2px blue;
+  font-weight: bold; }
+  header ul {
+    list-style-type: none; }
+    header ul li {
+      display: inline; }
+    header ul li:hover {
+      font-size: 1.01rem; }
+  header a {
+    text-decoration: none;
+    color: white; }
