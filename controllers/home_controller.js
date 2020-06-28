@@ -4,7 +4,12 @@ module.exports.home = function(req, res){
     // console.log(req.cookies);
     // res.cookie('user_id', 25);//changing cookie from server side
     console.log(req);
-    Posts.find().populate('user').exec(function(err, post){
+    Posts.find().populate('user').populate({
+        path: 'comment',
+        populate: {
+            path: 'user'
+        }
+    }).exec(function(err, post){
         res.render('home',{
             title: 'Home',
             posts: post
