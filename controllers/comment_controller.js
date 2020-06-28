@@ -21,16 +21,20 @@ module.exports.create = function(req, res){
 
 module.exports.destroy = function(req, res){
     Comment.findById(req.params.id, function(err, comment){
-        if(comment.user == req.user.id){
-            let postId = comment.post;
+        Post.findById(comment.post, function(err, post){//this is done to give access to the authenticated user to delete comments on their own post
+            user = post.user;
+            if(comment.user == req.user.id ||  user == req.user.id){
+                let postId = comment.post;
 
-            comment.remove();
+                comment.remove();
 
-            Post.findByIdAndUpdate(postId, {$pull: {comments: req.params.id}},function(err, post){
+                Post.findByIdAndUpdate(postId, {$pull: {comment: req.params.id}},function(err, post){
+                    if(err){console.log("Error in deleting comment");}
+                    return res.redirect('back');
+                });
+            }else{
                 return res.redirect('back');
-            });
-        }else{
-            return res.redirect('back');
-        }
+            }
+        });
     });
 }
