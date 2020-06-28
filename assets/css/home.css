@@ -1,3 +1,9 @@
 #posts {
   height: 400px;
   overflow-y: scroll; }
+
+#feed-posts {
+  width: 50vw; }
+
+div {
+  display: flex; }
