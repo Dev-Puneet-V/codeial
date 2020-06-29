@@ -1,22 +1,24 @@
 const Comment = require('../models/comment');
 const Post = require('../models/post');
 
-module.exports.create = function(req, res){
+module.exports.create = async function(req, res){
     //checking whether the postId Exist or not
-    Post.findById(req.body.post, function(err, post){
+    try{
+    let post = await Post.findById(req.body.post);
         if(post){
-            Comment.create({
+            let comment = await Comment.create({
                 content: req.body.content,
                 user: req.user._id,
                 post: req.body.post
-            }, function(err, comment){
+            }); 
                 if(err){console.log('Error, unable to create error'); return res.redirect('/');}
                 post.comment.push(comment);
                 post.save();
                 res.redirect('/');
-            });
         }
-    });
+    }catch(err){
+        console.log('Error', err);
+    }
 }
 
 module.exports.destroy = function(req, res){
@@ -28,6 +30,7 @@ module.exports.destroy = function(req, res){
 
                 comment.remove();
 
+                //$pull -> https://docs.mongodb.com/manual/reference/operator/update/pull/
                 Post.findByIdAndUpdate(postId, {$pull: {comment: req.params.id}},function(err, post){
                     if(err){console.log("Error in deleting comment");}
                     return res.redirect('back');

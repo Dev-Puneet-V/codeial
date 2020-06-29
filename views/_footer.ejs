@@ -1,4 +1,6 @@
 <footer>
     <span>@<i>Codial</i>. All Rights Reserved</span>
-    <a href="/users/profile/<%= locals.user.id %>">Home Profile</a>
+    <% if ( locals.user ) {%>
+        <a href="/users/profile/<%= locals.user.id %>">Home Profile</a>
+    <% } %>
 </footer>
