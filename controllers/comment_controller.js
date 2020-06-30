@@ -11,13 +11,15 @@ module.exports.create = async function(req, res){
                 user: req.user._id,
                 post: req.body.post
             }); 
-                if(err){console.log('Error, unable to create error'); return res.redirect('/');}
-                post.comment.push(comment);
-                post.save();
-                res.redirect('/');
+            post.comment.push(comment);
+            post.save();
+            req.flash('success', 'Comment Added');
+            res.redirect('/');
         }
     }catch(err){
-        console.log('Error', err);
+        req.flash('error', 'Unable to comment');
+        console.log('Unable to create comment');
+        return res.redirect('/');
     }
 }
 
@@ -32,7 +34,8 @@ module.exports.destroy = function(req, res){
 
                 //$pull -> https://docs.mongodb.com/manual/reference/operator/update/pull/
                 Post.findByIdAndUpdate(postId, {$pull: {comment: req.params.id}},function(err, post){
-                    if(err){console.log("Error in deleting comment");}
+                    if(err){req.flash('error','Unable to delete comment'); console.log("Error in deleting comment"); res.redirect('back');}
+                    req.flash('success', 'comment deleted');
                     return res.redirect('back');
                 });
             }else{

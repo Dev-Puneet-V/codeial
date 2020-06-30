@@ -47,9 +47,11 @@ module.exports.create = function(req, res){
          User.create(req.body, function(err, user){
             if(err){ console.log("error in creating user"); return;}
             console.log('user created')
+            req.flash('success', 'User Successfully Created');
             return res.redirect('/users/sign-in');
          });
       }else{
+         req.flash('User Already Exists');
          console.log("user already exists")
          return res.redirect('back');
       }
@@ -60,7 +62,7 @@ module.exports.create = function(req, res){
 //sign in and create a session for user
 module.exports.createSession = function(req, res){
    req.flash('success', 'Logged in Successfully');
-   return res.redirect('/')
+   return res.redirect('/');
 }
 
 
@@ -73,9 +75,11 @@ module.exports.destroySession = function(req, res){
 module.exports.update = function(req, res){
    if(req.user.id == req.params.id){
       User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
+         req.flash('success', 'Data Updated');
          return res.redirect('/');
       });
    }else{
+      req.flash('error', 'Unauthorized');
       res.status(401).send('unauthorized');
    }
 }

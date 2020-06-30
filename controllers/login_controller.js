@@ -14,6 +14,7 @@ module.exports.newLogin = function(req, res){
         email: req.body.email
     }, function(err, docs){
         if(err){
+            req.flash('error', 'Unable to retrieve data')
             console.log("Unable to retrieve data");
             return;
         }
@@ -23,6 +24,7 @@ module.exports.newLogin = function(req, res){
                     title: 'Logged In'
                 })
             }else{
+                req.success('error', 'username/password wrong');
                 return res.redirect('back');
             }
         }
