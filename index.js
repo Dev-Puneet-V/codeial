@@ -16,6 +16,11 @@ const MongoStore = require('connect-mongo')(session);//an argument(session), the
 
 //using sass
 const sassMiddleware = require('node-sass-middleware');
+
+//flash messages
+const flash = require('connect-flash');
+const customMware = require('./config/middleware');
+
 app.use(sassMiddleware({
     src: './assets/scss',//from where do i pick up scss file to convergt into css
     dest: './assets/css',//where i need to put my css file
@@ -64,6 +69,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(passport.setAuthenticatedUser);
+app.use(flash());//used after passport session, since it uses session cookies
+app.use(customMware.setFlash);
+
 
 //use express router
 app.use('/', require('./routes'));//middleware
