@@ -5,6 +5,11 @@ class postComments {
         this.postContainer = $(`#post-${postId}`);
         this.newCommentForm = $(` .comment-form`, this.postContainer);
         this.createComment(postId);
+        let self = this;
+        // this.convertCommentsToAjax();
+        $(" .delete-comment-button",this.postContainer).each(function(){
+            self.deleteComment($(this));
+        })
     }
 
     createComment(postId) {
@@ -75,11 +80,4 @@ class postComments {
         })
     }
 
-    //convert all posts to Ajax
-    convertCommentsToAjax() {
-        $('#posts > li').each(function () {
-            deletePost($(' .delete-post-button', $(this)));
-            new postComments($(this).prop('id').split('-')[1]);
-        })
-    }
 }
