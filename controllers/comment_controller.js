@@ -45,6 +45,14 @@ module.exports.destroy = function(req, res){
                 //$pull -> https://docs.mongodb.com/manual/reference/operator/update/pull/
                 Post.findByIdAndUpdate(postId, {$pull: {comment: req.params.id}},function(err, post){
                     if(err){req.flash('error','Unable to delete comment'); console.log("Error in deleting comment"); res.redirect('back');}
+                    if(req.xhr){
+                        return res.status(200).json({
+                            data: {
+                                commentId: req.params.id
+                            },
+                            message: "Post Deleted Successfully"
+                        });
+                    }
                     req.flash('success', 'comment deleted');
                     return res.redirect('back');
                 });
