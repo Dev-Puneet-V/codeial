@@ -6,7 +6,10 @@ module.exports.home = async function(req, res){
     // res.cookie('user_id', 25);//changing cookie from server side
     try{
         //await is inside async, await is used so that before going forward it must complete the awaited one
-        let post = await Posts.find().populate('user').populate({
+        let post = await Posts.find({})
+        .sort('-createdAt')
+        .populate('user')
+        .populate({
             path: 'comment',
             populate: {
                 path: 'user'
@@ -25,4 +28,3 @@ module.exports.home = async function(req, res){
 }
 
 //module.exports.actionName = function(req, res){}
-

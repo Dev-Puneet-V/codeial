@@ -11,9 +11,11 @@
     </form>
     <% } %>
     <ul id="posts">
-        <% for(i of posts) { %> 
-            <%- include('_post'); %>
-        <% } %>
+        <li>
+            <% for(i of posts) { %> 
+                <%- include('_post'); %>
+            <% } %>
+        </li>
     </ul>
 </section>
 
@@ -28,3 +30,4 @@
     </ul>
 </section>
 </div>
+<script src="/js/home_posts.js"></script>

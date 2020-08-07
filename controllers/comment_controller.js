@@ -42,5 +42,5 @@ module.exports.destroy = function(req, res){
                 return res.redirect('back');
             }
         });
-    });
+   });
 }
