@@ -10,13 +10,23 @@ module.exports.create = async function(req, res){
                 content: req.body.content,
                 user: req.user._id,
                 post: req.body.post
-            }); 
+            });
             post.comment.push(comment);
             post.save();
+            if(req.xhr){
+                await comment.populate('user', 'name').execPopulate();
+                return res.status(200).json({
+                    data:{
+                        comment:comment
+                    },
+                    message:"posted comment"
+                });
+            }
             req.flash('success', 'Comment Added');
             res.redirect('/');
         }
     }catch(err){
+        console.log(err);
         req.flash('error', 'Unable to comment');
         console.log('Unable to create comment');
         return res.redirect('/');

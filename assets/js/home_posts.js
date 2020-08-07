@@ -64,18 +64,18 @@
                 type: 'get',
                 url: $(deleteLink).prop('href'),
                 success: function (data) {
-                new Noty({
-                    theme: 'relax',
-                    text: 'Post and associated comments deleted',
-                    type: 'success',
-                    layout: 'topRight',
-                    timeout: 1500
-                }).show();
-                $(`#post-${data.data.post_id}`).remove();
-                }, error: function (error) {
-                    console.log(error.responseText);
-                }
-            })
+                    new Noty({
+                        theme: 'relax',
+                        text: 'Post and associated comments deleted',
+                        type: 'success',
+                        layout: 'topRight',
+                        timeout: 1500
+                    }).show();
+                    $(`#post-${data.data.post_id}`).remove();
+                    }, error: function (error) {
+                        console.log(error.responseText);
+                    }
+                })
         })
     }
 
@@ -83,6 +83,7 @@
     let convertPostsToAjax = function(){
         $('#posts > li').each(function(){
             deletePost($(' .delete-post-button', $(this)));
+            new postComments($(this).prop('id').split('-')[1]);
         })
     }
 
