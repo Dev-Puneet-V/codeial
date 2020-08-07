@@ -58,7 +58,6 @@
 
     // method to delete the post from DOM
     let deletePost = function (deleteLink) {
-        console.log("Delete");
         $(deleteLink).click(function (e) {
             e.preventDefault();
             $.ajax({
@@ -80,5 +79,13 @@
         })
     }
 
+    //convert all posts to Ajax
+    let convertPostsToAjax = function(){
+        $('#posts > li').each(function(){
+            deletePost($(' .delete-post-button', $(this)));
+        })
+    }
+
     createPost();
+    convertPostsToAjax();
 }

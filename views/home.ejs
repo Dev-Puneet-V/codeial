@@ -11,11 +11,9 @@
     </form>
     <% } %>
     <ul id="posts">
-        <li>
-            <% for(i of posts) { %> 
-                <%- include('_post'); %>
-            <% } %>
-        </li>
+        <% for(i of posts) { %> 
+            <%- include('_post'); %>
+        <% } %>
     </ul>
 </section>
 
