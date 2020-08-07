@@ -16,7 +16,10 @@
                     console.log(data);
                     let newPost = newPostDom(data.data.post);
                     $('#posts').prepend(newPost);
-                    deletePost(' .delete-post-button', newPost); //populating function deletePost with newPost 
+
+                    //jquery to populate function deletePost() with the class (.delete-post-button) in newPost
+                    deletePost($(' .delete-post-button', newPost));
+                    //populating function deletePost with newPost 
                     //noty was not able to show alert message with ajax, so it is required to use it here 
                     new Noty({
                         theme: 'relax',
@@ -47,8 +50,7 @@
         </form>
         Comments:<br>
         <div class="post-comments-list">
-            <ul id="post-comments-${posts._id}">
-                
+            <ul id="post-comments-${post._id}"> 
             </ul>
         </div>
     </li>`)
@@ -56,15 +58,21 @@
 
     // method to delete the post from DOM
     let deletePost = function (deleteLink) {
+        console.log("Delete");
         $(deleteLink).click(function (e) {
             e.preventDefault();
-
             $.ajax({
                 type: 'get',
                 url: $(deleteLink).prop('href'),
                 success: function (data) {
-                    $(`#post-${data.data.post_id}`).remove();
-                    console.group(error.responseText);
+                new Noty({
+                    theme: 'relax',
+                    text: 'Post and associated comments deleted',
+                    type: 'success',
+                    layout: 'topRight',
+                    timeout: 1500
+                }).show();
+                $(`#post-${data.data.post_id}`).remove();
                 }, error: function (error) {
                     console.log(error.responseText);
                 }
