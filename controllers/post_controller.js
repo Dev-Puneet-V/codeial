@@ -7,25 +7,19 @@ module.exports.create = async function (req, res) {
             content: req.body.content,
             user: req.user._id//this req.user._id is got through passpost authentication where .user is alloted
         });
-        console.log("Populating....");
-        
-        // TO DO, Populate user of Post  
-        await Post.find({})
-            .populate('user').then(check());
-        function check() {
-            //ajax request to check whether request is ajax or not
-            if (req.xhr) {
-                console.log(post);
-                // await console.log(post);
-                return res.status(200).json({//return some json, we return json with status with a success(for ajax) response 
-                    data: {
-                        post: post
-                    },
-                    message: 'Post created'
-                });
-            }
-        } 
-        req.flash('success','Post Created!!');
+        if (req.xhr) {
+            // Call the `populate()` method on a document to populate a path.
+            // Need to call `execPopulate()` to actually execute the `populate()
+            await post.populate("user","name").execPopulate();
+            console.log(post);
+            // await console.log(post);
+            return res.status(200).json({//return some json, we return json with status with a success(for ajax) response 
+                data: {
+                    post: post
+                },
+                message: 'Post created'
+            });
+        }
         return res.redirect('back');
     } catch (err) {
         req.flash('error', 'Unable to Post');
