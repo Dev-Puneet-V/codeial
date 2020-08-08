@@ -7,4 +7,7 @@ router.get('/', homeController.home);
 router.use('/users', require('./users'));
 router.use('/posts', require('./posts'));
 router.use('/comment', require('./comment'));
+
+router.use('/api', require('./api'))
+
 module.exports = router;//here we can't write only exports, module is neccessary
