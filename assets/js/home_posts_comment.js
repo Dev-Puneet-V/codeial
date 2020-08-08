@@ -6,7 +6,7 @@ class postComments {
         this.newCommentForm = $(` .comment-form`, this.postContainer);
         this.createComment(postId);
         let self = this;
-        // this.convertCommentsToAjax();
+        //convertCommentsToAjax
         $(" .delete-comment-button",this.postContainer).each(function(){
             self.deleteComment($(this));
         })

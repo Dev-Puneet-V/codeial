@@ -1,5 +1,6 @@
 const User = require('../models/user');
-
+const fs = require('fs');
+const path = require('path');
 
 module.exports.profile = function(req, res){
    User.findById(req.params.id, function(err, user){
@@ -72,12 +73,38 @@ module.exports.destroySession = function(req, res){
    return res.redirect('/');
 }
 
-module.exports.update = function(req, res){
+module.exports.update = async function(req, res){
    if(req.user.id == req.params.id){
-      User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
-         req.flash('success', 'Data Updated');
-         return res.redirect('/');
-      });
+      try{
+         // await User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
+         //    req.flash('success', 'Data Updated');
+         //    // return res.redirect('/');
+         // });
+         let user = await User.findById(req.params.id);
+         //this is static function defined in models user.js which used multer to update things
+         User.uploadAvatar(req, res, function(err){
+            if(err){
+               console.log("*****Multer Error", err);
+               return res.redirect('back');
+            }
+            user.name = req.body.name;
+            user.email = req.body.email;
+            //if file is uploaded
+            if(req.file){
+               //deleting old image before uploading new image
+               if(user.avatar){
+                  fs.unlinkSync(path.join(__dirname, '..', user.avatar));
+               }
+               //it is saving the path of the uploaded file into avatar field in the user
+               user.avatar = User.avatarPath + '/' + req.file.filename;
+            }
+            user.save();
+            return res.redirect('back');
+         });
+      }catch(err){
+         req.flash('error', err);
+         return res.redirect('back');
+      }
    }else{
       req.flash('error', 'Unauthorized');
       res.status(401).send('unauthorized');

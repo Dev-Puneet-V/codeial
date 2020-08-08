@@ -31,8 +31,9 @@ app.use(sassMiddleware({
 
 app.use(express.urlencoded({ extended: false }));//used to get encoded data due to the post request
 app.use(express.static('./assets'));
+//make path available to the browser
+app.use('/uploads', express.static(__dirname + '/uploads'));
 app.use(expressLayout);
-
 app.use(cookieParser());
 
 // extract style and scripts from sub pages into the layout.ejs file otherwise the link files of css comes under head 
