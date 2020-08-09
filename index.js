@@ -11,7 +11,7 @@ const db = require('./config/mongoose');
 const session = require('express-session');//it is helping to automatically encrypt cookie
 const  passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
-
+const passportJWT = require('./config/passport-jwt-strategy');
 const MongoStore = require('connect-mongo')(session);//an argument(session), the express session, here it is used for storing the session cookies in DB
 
 //using sass
