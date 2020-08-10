@@ -10,6 +10,9 @@ let opts = {
     secretOrKey : 'codeial'
 }
 
+
+//router.delete('/:id', passport.authenticate('jwt', {session: false}), postsApi.destroy);
+//the below code matches this user id with the token which is generated
 passport.use(new JwtStrategy(opts, async function(jwt_payload, done) {
     await User.findOne({_id: jwt_payload._id}, function(err, user) {
         if (err) {
