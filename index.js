@@ -12,6 +12,7 @@ const session = require('express-session');//it is helping to automatically encr
 const  passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 const passportJWT = require('./config/passport-jwt-strategy');
+const passportGoogle = require('./config/passport-google-oauth2-strategy');
 const MongoStore = require('connect-mongo')(session);//an argument(session), the express session, here it is used for storing the session cookies in DB
 
 //using sass
