@@ -10,8 +10,8 @@ let opts = {
     secretOrKey : 'codeial'
 }
 
-passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
-    User.findOne({id: jwt_payload._id}, function(err, user) {
+passport.use(new JwtStrategy(opts, async function(jwt_payload, done) {
+    await User.findOne({_id: jwt_payload._id}, function(err, user) {
         if (err) {
             return done(err, false);
         }
