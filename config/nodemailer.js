@@ -2,16 +2,18 @@ const nodemailer = require('nodemailer');
 const ejs = require('ejs');
 const path = require('path');
 // Only needed if you don't have a real mail account for testing
-let testAccount = await nodemailer.createTestAccount();
+let testAccount = async () => {
+   return  await nodemailer.createTestAccount();
+}
 
 let transporter = nodemailer.createTransport({
     // service : 'gmail',
-    host : 'smtp.ethereal.email',//smtp.gmail.com
+    host : 'smtp.gmail.com',//smtp.gmail.com
     port: '587',
     secure: false,//two factor authentication
     auth: {
-        user: testAccount.user, // generated ethereal user
-        pass: testAccount.pass, // generated ethereal password
+        user: 'testcodeial', // generated ethereal user
+        pass: 'testcodeial@123', // generated ethereal password
     }
 });
 
