@@ -24,7 +24,7 @@ let renderTemplate = (data, relativePath) => {
         path.join(__dirname, '../views/mailers', relativePath),//relative path is the place from where this function is called
         data,//data tobe passed to ejs file
         function(err, template){
-            if(err){console.log('error in rendering templates'); return;}
+            if(err){console.log('error in rendering templates', err); return;}
             mailHTML = template;
         }
     );
