@@ -37,6 +37,7 @@ module.exports.create = async function(req, res){
                 if(err){console.log('error in creating a queue', err); return;}
                 console.log('job enqued', job_c.id);
             });
+            //this worker for handling the queue for sending mails if someone comment on your post
             let job_c_p = queue.create('emails_post_comment', comment).save(function(err){
                 if(err){console.log('error in creating a queue', err); return;}
                 console.log('job enqued', job_c_p.id);
