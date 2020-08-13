@@ -21,13 +21,13 @@ exports.newComment = (comment) => {
 }
 
 //this is another way of exporting a method, this function is called from comment_controller.js of controller folder
-exports.newCommentPost = (comment) => {
+exports.newCommentPost = (data) => {
     console.log('inside newCommentPost mailer');
-    let htmlString = nodemailer.renderTemplate({comment: comment}, '/comments/new_comment_post.ejs');
+    let htmlString = nodemailer.renderTemplate({post: data.post, comment: data.comment}, '/comments/new_comment_post.ejs');
     //this is transporter is exported from nodemailer.js --> config folder
     nodemailer.transporter.sendMail({
         from: 'testcodeial@gmail.com',
-        to: comment.post.user.email,
+        to: data.post.user.email,
         subject: "Someone Commented On your Post",
         html: htmlString
     }, (err, info) => {

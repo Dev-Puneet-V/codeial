@@ -7,7 +7,11 @@ const commentPostEmailWorker = require('../workers/comment_post_email_worker');
 module.exports.create = async function(req, res){
     //checking whether the postId Exist or not
     try{
-    let post = await Post.findById(req.body.post);
+        let post = await Post.findById(req.body.post);
+        await post.populate('user','name email').execPopulate((err) => {
+            if(err){console.log('Some error in populating post', err); return;}
+        });
+
         if(post){
             let comment = await Comment.create({
                 content: req.body.content,
@@ -16,19 +20,8 @@ module.exports.create = async function(req, res){
             });
             post.comment.push(comment);
             post.save();
-            await comment.populate('user', 'name email').
-            populate({
-              path:  'post',
-              select: 'content',
-              populate: {
-                  path: 'user',
-                  select: {
-                    'name': 1,
-                    'email': 1,
-                    '_id': req.user._id,
-                  }
-                }
-            }).execPopulate();
+            console.log('post1', post, 'post2');
+            await comment.populate('user', 'name email').execPopulate();
             // console.log(comment);
             // commentMailer.newComment(comment);
             //Job queue using kue, this will call kue.create and create queue, if the queue is not created then it will create it othewise just work on it
@@ -38,7 +31,7 @@ module.exports.create = async function(req, res){
                 console.log('job enqued', job_c.id);
             });
             //this worker for handling the queue for sending mails if someone comment on your post
-            let job_c_p = queue.create('emails_post_comment', comment).save(function(err){
+            let job_c_p = queue.create('emails_post_comment', {post: post, comment: comment}).save(function(err){
                 if(err){console.log('error in creating a queue', err); return;}
                 console.log('job enqued', job_c_p.id);
             });
