@@ -1,6 +1,33 @@
 #posts {
-  height: 400px;
-  overflow-y: scroll; }
+  height: 450px;
+  overflow-y: scroll;
+  background-color: #403c3c;
+  list-style-type: none;
+  border-radius: 2px;
+  margin-left: 2px;
+  padding: 0px; }
+  #posts * {
+    border-radius: 3px; }
+  #posts li {
+    background-color: white;
+    text-decoration: none;
+    width: 95%;
+    margin: auto;
+    margin-top: 10px;
+    height: 200px;
+    overflow-y: scroll;
+    padding-left: 5px; }
+  #posts li::-webkit-scrollbar {
+    width: 0px;
+    /* Remove scrollbar space */
+    background: transparent;
+    /* Optional: just make scrollbar invisible */ }
+
+#posts::-webkit-scrollbar {
+  width: 0px;
+  /* Remove scrollbar space */
+  background: transparent;
+  /* Optional: just make scrollbar invisible */ }
 
 #feed-posts {
   width: 50vw; }

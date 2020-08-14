@@ -6,6 +6,17 @@
     <% } %>
     <p ><%= i.content %></p>
     <p class="name"><%= i.user.name %></p>
+
+    <!-- display the likes of this post, if the user is logged in, then show the link to toggle likes, else just show them -->
+    <small>
+        <% if(locals.user){ %>
+            <a class="toggle-like-button" data-likes="<%= i.likes.length %>" href="/likes/toggleLike/?id=<%= i._id %>&type=Post">
+                <%= i.likes.length %> Likes
+            </a>
+        <% }else{ %>
+            <%= i.likes.length %> Likes
+        <% } %>
+    </small>
     <% if(locals.user){ %>
         <form class="comment-form" action="/comment/create" method="Post">
             <input type="text" name="content" placeholder="Type Here To add Comment..." required>

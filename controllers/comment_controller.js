@@ -54,12 +54,15 @@ module.exports.create = async function(req, res){
     }
 }
 
-module.exports.destroy = function(req, res){
-    Comment.findById(req.params.id, function(err, comment){
-        Post.findById(comment.post, function(err, post){//this is done to give access to the authenticated user to delete comments on their own post
+module.exports.destroy =  function(req, res){
+    let comment = Comment.findById(req.params.id, function(err, comment){
+        Post.findById(comment.post, async function(err, post){//this is done to give access to the authenticated user to delete comments on their own post
             user = post.user;
             if(comment.user == req.user.id ||  user == req.user.id){
                 let postId = comment.post;
+                
+                //remove Likes which are associated with this comment
+                await Like.deleteMany({likable: comment._id, onModel: 'Comment'});
 
                 comment.remove();
 

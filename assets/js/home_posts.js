@@ -19,6 +19,10 @@
 
                     //jquery to populate function deletePost() with the class (.delete-post-button) in newPost
                     deletePost($(' .delete-post-button', newPost));
+
+                    //enable the functionality of th toggle like button on  the new comment
+                    new ToggleLike($(' .toggle-like-button', newPost));
+
                     //populating function deletePost with newPost 
                     //noty was not able to show alert message with ajax, so it is required to use it here 
                     new Noty({
@@ -43,6 +47,13 @@
         </small>
         <p >${post.content}</p>
         <p class="name">${post.user.name}</p>
+
+        <small>
+            <a class="toggle-like-button" data-likes="0" href="/likes/toggleLike/?id=${post._id}&type=Post">
+                0 Likes
+            </a>
+        </small>
+
         <form action="/comment/create" method="Post">
             <input type="text" name="content" placeholder="Type Here To add Comment..." required>
             <input type="hidden" name="post" value='${post._id}'>
