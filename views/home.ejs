@@ -1,31 +1,32 @@
 <link rel="stylesheet" href="/css/home.css">
 <div>
-<section id="feed-posts">
-    <h4>Posts</h4>
-    <% if(locals.user){ %>
-    <form action="/posts/create" id="new-post-form" method="Post">
-        <textarea name="content" cols="30" rows="3" placeholder="Type Here..." required>
-        </textarea>
-        <input type="submit" value="Post">
-    </form>
-    <% } %>
-    <ul id="posts">
-        <% for(i of posts) { %> 
-            <%- include('_post'); %>
+    <section id="feed-posts">
+        <h4>Posts</h4>
+        <% if(locals.user){ %>
+        <form action="/posts/create" id="new-post-form" method="Post">
+            <textarea name="content" cols="30" rows="3" placeholder="Type Here..." required>
+            </textarea>
+            <input type="submit" value="Post">
+        </form>
         <% } %>
-    </ul>
-</section>
+        <ul id="posts">
+            <% for(i of posts) { %> 
+                <%- include('_post'); %>
+            <% } %>
+        </ul>
+    </section>
 
-<section id="user-friends">
-    <h4>Friends</h4>
-    <ul>
-        <% for(u of all_users){ %>
-            <li>
-                <a href="/users/profile/<%=u.id %>"><%= u.name %></a>
-            </li>
-        <% } %>
-    </ul>
-</section>
+    <section id="user-friends">
+        <h4>Friends</h4>
+        <ul>
+            <% for(u of all_users){ %>
+                <li>
+                    <a href="/users/profile/<%=u.id %>"><%= u.name %></a>
+                </li>
+            <% } %>
+        </ul>
+    </section>
+    <%- include('_chat_box') -%>
 </div>
 <script src="/js/home_posts_comment.js"></script>
 <script src="/js/home_posts.js"></script>
@@ -38,3 +39,11 @@
         let toggleLike = new ToggleLike(self);    
     });
 </script>
+<!-- socket.io -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+<script src="/js/chat_engine.js"></script>
+<% if (locals.user){ %>
+<script>
+    new ChatEngine('user-chat-box', '<%= locals.user.email %>')
+</script>
+<% } %>
