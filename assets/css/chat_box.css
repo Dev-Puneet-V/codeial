@@ -1,4 +1,11 @@
+#chat-messages-list::-webkit-scrollbar {
+  width: 0px;
+  /* Remove scrollbar space */
+  background: transparent;
+  /* Optional: just make scrollbar invisible */ }
+
 #user-chat-box {
+  overflow-y: scroll;
   position: fixed;
   bottom: 10px;
   right: 10px;
@@ -15,19 +22,26 @@
     background-color: white;
     overflow: auto;
     width: 100%; }
+    #user-chat-box #chat-messages-list .user-join {
+      text-align: center;
+      background-color: grey;
+      color: white;
+      padding: 2px;
+      border-radius: 10px;
+      margin-bottom: 3px; }
     #user-chat-box #chat-messages-list .other-message {
       text-align: left;
       padding: 5px; }
       #user-chat-box #chat-messages-list .other-message span {
         display: inline-block;
-        padding: 15px;
+        padding: 3px;
         background-color: #ffa0a0; }
     #user-chat-box #chat-messages-list .self-message {
       text-align: right;
-      padding: 5px; }
+      padding: 3x; }
       #user-chat-box #chat-messages-list .self-message span {
         display: inline-block;
-        padding: 15px;
+        padding: 3px;
         background-color: #a0dcff; }
   #user-chat-box #chat-message-input-container {
     height: 24%;

@@ -1,5 +1,10 @@
 // CHANGE :: add styling for the chat box
+#chat-messages-list::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
 #user-chat-box{
+	overflow-y: scroll;
     position: fixed;
     bottom: 10px;
     right: 10px;
@@ -16,13 +21,21 @@
 	    height: 70%;
 	    background-color: white;
 	    overflow: auto;
-        width: 100%;
+		width: 100%;
+		.user-join{
+			text-align: center;
+			background-color: grey;
+			color: white;
+			padding: 2px;
+			border-radius: 10px;
+			margin-bottom: 3px;
+		}
 	    .other-message{
 		    text-align: left;
 		    padding: 5px;
 		    span{
 		    	display: inline-block;
-	    		padding: 15px;
+	    		padding: 3px;
 		    	background-color: #ffa0a0;
 		    }
 		    
@@ -30,12 +43,12 @@
 
 	    .self-message{
 		    text-align: right;
-		    padding: 5px;
+		    padding: 3x;
 		   
 		    span{
 		    	 
 	    		display: inline-block;
-	    		padding: 15px;
+	    		padding: 3px;
     			background-color: #a0dcff;
 		    }
 		   

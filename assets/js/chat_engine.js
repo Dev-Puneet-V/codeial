@@ -11,7 +11,37 @@ class ChatEngine{
             this.connectionHandler();
         }
     }
-
+    userJoin(data){
+        let self = this;
+        let newJoine = "You joined the room "
+                if(data.user_email != self.userEmail){
+                    newJoine = data.user_email + " joined the room"; 
+                }
+                let newMessage = $('<li>');
+                newMessage.append($('<span>', {
+                    'html': newJoine
+                }));
+                newMessage.append('<br>');
+                newMessage.addClass('user-join');
+                $('#chat-messages-list').append(newMessage);
+                
+    }
+    previousChat(chat){
+        let self = this;
+        let oldMessage = $('<li>');
+            let messageType = 'other-message';
+            if(chat.user == self.userEmail){
+                messageType = 'self-message';
+            }
+            oldMessage.append($('<span>', {
+                'html': chat.message
+            }));
+            oldMessage.append($('<sub>', {
+                'html': chat.user
+            }));
+            oldMessage.addClass(messageType);
+            $('#chat-messages-list').append(oldMessage);
+    }
     connectionHandler(){
         
         let self = this;
@@ -23,10 +53,19 @@ class ChatEngine{
             //join room is created if not, else previous one is used
             self.socket.emit('join_room', {
                 user_email: self.userEmail,
-                chatroom: 'codeial'
+                chatroom: 'codeial',
+                socketId: self.socket.id
+            });
+            // self.socket.emit('getold',{
+            //     user: self.userEmail
+            // })
+            self.socket.on('get_message', function(chats){
+                for(let i = 0; i < chats.length; i++){
+                    self.previousChat(chats[i]);
+                }
             });
             self.socket.on('user_joined', function(data){
-                console.log('a user joined!', data);
+                self.userJoin(data);
             })
         });
 
