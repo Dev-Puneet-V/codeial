@@ -1,5 +1,7 @@
 const express = require('express');
+const env =  require('./config/environment');
 const cookieParser = require('cookie-parser');
+const Path = require('path');
 const app = express();
 const port = 8000;
 
@@ -30,15 +32,15 @@ console.log('Chat server is listening on port 5000');
 
 
 app.use(sassMiddleware({
-    src: './assets/scss',//from where do i pick up scss file to convergt into css
-    dest: './assets/css',//where i need to put my css file
+    src: Path.join(__dirname, env.asset_path, 'scss'),//from where do i pick up scss file to convergt into css
+    dest: Path.join(__dirname, env.asset_path, 'css'),//where i need to put my css file
     debug: true,//do i wnat to show some error when some file is not converted
     outputStyle: 'extended',//To keep file text in which format
     prefix: '/css'//where should my server should look for css file
 }));
 
 app.use(express.urlencoded({ extended: false }));//used to get encoded data due to the post request
-app.use(express.static('./assets'));
+app.use(express.static(env.asset_path));
 //make path available to the browser
 app.use('/uploads', express.static(__dirname + '/uploads'));
 app.use(expressLayout);
@@ -59,7 +61,7 @@ app.set('views', './views');
 app.use(session({
     name: 'codeial',
     //TODO change the secret before deployment in production mode
-    secret: 'blahsomething',
+    secret: env.session_cookie_key,
     saveUninitialized: false,
     resave: false,
     cookie: {

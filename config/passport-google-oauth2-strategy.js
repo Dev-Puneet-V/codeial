@@ -2,13 +2,13 @@ const passport = require('passport');
 const googleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const crypto = require('crypto');//used for generating random password
 const User = require('../models/user');
-
+const env = require('./environment');
 //tell passport to use a new STrategy for google login
 passport.use(new googleStrategy({
-        clientID: '1016752488714-06o28abvpi1anfftg71ilkek4fmabtlf.apps.googleusercontent.com',
-        clientSecret: 'jVOGcDgyUF9q59PxiQBIsj6H',
-        callbackURL: 'http://localhost:8000/users/auth/google/callback'
-    },
+    clientID: env.google_client_id,
+    clientSecret: env.google_client_secret,
+    callbackURL: env.google_callback_url      
+},
 
     //for ex accessToken expires then refreshToken generates new Token, profile will contain some sort of users info, here we are using emails[0] because user can have many email address
     function(accessToken, refreshToken, profile, done){

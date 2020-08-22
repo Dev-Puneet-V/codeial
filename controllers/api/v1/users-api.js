@@ -1,6 +1,6 @@
 const User = require('../../../models/user');
 const jwt = require('jsonwebtoken');
-
+const env = require('../../../config/environment');
 //sign in and create a session for user
 module.exports.createSession = async function(req, res){
     try{
@@ -15,7 +15,7 @@ module.exports.createSession = async function(req, res){
         return res.json(200, {
             message: 'Sign in Successful, here is your token, please keep it safe',
             data:{
-                token: jwt.sign(user.toJSON(), 'codeial',{expiresIn:'100000'})//encrypts, check in postman, The encrypted part will be having three parts header, payload and signature differentiated by dot
+                token: jwt.sign(user.toJSON(), env.jwt_secret, {expiresIn:'100000'})//encrypts, check in postman, The encrypted part will be having three parts header, payload and signature differentiated by dot
                 //body -> x-www... -> put key and password
             }
         })
