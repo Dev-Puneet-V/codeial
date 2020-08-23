@@ -7,7 +7,7 @@ const env = require('./environment');
 passport.use(new googleStrategy({
     clientID: env.google_client_id,
     clientSecret: env.google_client_secret,
-    callbackURL: env.google_callback_url      
+    callbackURL: env.google_call_back_url     
 },
 
     //for ex accessToken expires then refreshToken generates new Token, profile will contain some sort of users info, here we are using emails[0] because user can have many email address

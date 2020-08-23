@@ -1,5 +1,6 @@
 body {
   margin: 0;
-  color: black; }
+  color: grey;
+  background-color: #3b3b3b; }
   body #layout-main {
-    height: 85vh; }
+    height: 100vh; }

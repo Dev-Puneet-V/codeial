@@ -30,14 +30,17 @@ const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
 chatServer.listen(5000);
 console.log('Chat server is listening on port 5000');
 
+//to load scss file only in developmet mode
+if(env.name == 'development') {
+    app.use(sassMiddleware({
+        src: Path.join(__dirname, env.asset_path, 'scss'),//from where do i pick up scss file to convergt into css
+        dest: Path.join(__dirname, env.asset_path, 'css'),//where i need to put my css file
+        debug: true,//do i wnat to show some error when some file is not converted
+        outputStyle: 'extended',//To keep file text in which format
+        prefix: '/css'//where should my server should look for css file
+    }));
+}
 
-app.use(sassMiddleware({
-    src: Path.join(__dirname, env.asset_path, 'scss'),//from where do i pick up scss file to convergt into css
-    dest: Path.join(__dirname, env.asset_path, 'css'),//where i need to put my css file
-    debug: true,//do i wnat to show some error when some file is not converted
-    outputStyle: 'extended',//To keep file text in which format
-    prefix: '/css'//where should my server should look for css file
-}));
 
 app.use(express.urlencoded({ extended: false }));//used to get encoded data due to the post request
 app.use(express.static(env.asset_path));
@@ -49,7 +52,6 @@ app.use(cookieParser());
 // extract style and scripts from sub pages into the layout.ejs file otherwise the link files of css comes under head 
 app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
-
 
 // set up the view engine
 app.set('view engine', 'ejs');

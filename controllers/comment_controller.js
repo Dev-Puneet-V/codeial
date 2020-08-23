@@ -14,7 +14,7 @@ module.exports.create = async function(req, res){
 
         if(post){
             let comment = await Comment.create({
-                content: req.body.content,
+                content: req.body.content.trim(),
                 user: req.user._id,
                 post: req.body.post
             });

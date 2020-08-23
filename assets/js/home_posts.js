@@ -41,18 +41,25 @@
 
     //method to create a post in DOM
     let newPostDom = function (post) {
+        
         return $(`<li id="post-${post._id}">
-        <small>
-            <a class="delete-post-button" href="/posts/destroy/${post._id}">X </a>
-        </small>
+        <div>
+            <img id="user-img" src=${post.user.avatar} >
+            <p class="name"><b>${post.user.name}</b></p>
+        </div>
         <p >${post.content}</p>
-        <p class="name">${post.user.name}</p>
-
-        <small>
+        <div style="border-bottom: 1px solid white; border-top: 1px solid white; padding: 5px; display:grid; grid-template-columns: 50% 50%">
+        <span style="text-align: center;">
             <a class="toggle-like-button" data-likes="0" href="/likes/toggleLike/?id=${post._id}&type=Post">
-                0 Likes
+                <i class="fa fa-2x fa-thumbs-up"></i> <span style="font-weight: bolder; font-size: larger;">0</span>
             </a>
-        </small>
+        </span>
+        <span style="text-align: center;">
+                <small>
+                    <a class="delete-post-button" href="/posts/destroy/${post._id}"><i style="color: white; position: relative;  right: 100;" class="fa fa-2x fa-trash"></i></a>
+                </small>
+            </span>
+        </div>
 
         <form action="/comment/create" method="Post">
             <input type="text" name="content" placeholder="Type Here To add Comment..." required>

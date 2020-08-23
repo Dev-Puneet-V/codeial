@@ -49,19 +49,13 @@ class postComments {
     newCommentDom(comment) {
         return $(`<li id="comment-${comment._id}">
         <p>
-             <small>
-                    <a class="delete-comment-button" href="/comment/destroy/${comment._id}">X</a>
-                </small>
+            <a class="delete-comment-button" href="/comment/destroy/${comment._id}"><i style="color: white; position: relative;  right: 100;" class="fa fa-trash"></i></a>
              ${comment.content}
             <br>
-            <small>
-                ${comment.user.name}
-            </small>
-            <small>
-            <a class="toggle-like-button" data-likes="0" href="/likes/toggleLike/?id=${comment._id}&type=Comment">
-                0 Likes
+            ${comment.user.name}
+            <a class="toggle-like-button" data-likes="<%= comment.likes.length %>" href="/likes/toggleLike/?id=${comment._id}&type=Comment">
+                <i class="fa fa-thumbs-up"></i><span style="font-weight: bolder; font-size: larger;">${comment.likes.length}</span>
             </a>
-        </small>
         </p>
     </li>`)
     }

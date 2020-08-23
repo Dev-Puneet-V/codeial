@@ -12,7 +12,7 @@ module.exports.create = async function (req, res) {
         });
         // Call the `populate()` method on a document to populate a path.
         // Need to call `execPopulate()` to actually execute the `populate()
-        await post.populate("user","name email").execPopulate();
+        await post.populate("user","name email avatar").execPopulate();
         
         //this worker for handling the queue for sending mails if someone comment on your post
         let job_post = queue.create('post_emails', post).save(function(err){

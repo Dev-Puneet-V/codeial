@@ -1,22 +1,29 @@
 <li id="post-<%= i._id %>">
-    <% if(locals.user && locals.user.id == i.user.id) { %> 
-    <small>
-        <a class="delete-post-button" href="/posts/destroy/<%= i._id %>">X</a>
-    </small>
-    <% } %>
+    <div>
+        <img id="user-img" src="<%= i.user.avatar %>" >
+        <p class="name"><b><%= i.user.name %></b></p>
+    </div>
+    
     <p ><%= i.content %></p>
-    <p class="name"><%= i.user.name %></p>
 
-    <!-- display the likes of this post, if the user is logged in, then show the link to toggle likes, else just show them -->
-    <small>
+    <div style="border-bottom: 1px solid white; border-top: 1px solid white; padding: 5px; display:grid; grid-template-columns: 50% 50%">
+        <span style="text-align: center;">
         <% if(locals.user){ %>
             <a class="toggle-like-button" data-likes="<%= i.likes.length %>" href="/likes/toggleLike/?id=<%= i._id %>&type=Post">
-                <%= i.likes.length %> Likes
+                <i class="fa fa-2x fa-thumbs-up"></i> <span style="font-weight: bolder; font-size: larger;"><%= i.likes.length %></span>
             </a>
         <% }else{ %>
-            <%= i.likes.length %> Likes
+            <i class="fa fa-2x fa-thumbs-up"></i><span style="font-weight: bolder; font-size: larger;"><%= i.likes.length %></span>
         <% } %>
-    </small>
+    </span>
+    <span style="text-align: center;">
+        <% if(locals.user && locals.user.id == i.user.id) { %> 
+            <small>
+                <a class="delete-post-button" href="/posts/destroy/<%= i._id %>"><i style="color: white; position: relative;  right: 100;" class="fa fa-2x fa-trash"></i></a>
+            </small>
+            <% } %>
+        </span>
+    </div>
     <% if(locals.user){ %>
         <form class="comment-form" action="/comment/create" method="Post">
             <input type="text" name="content" placeholder="Type Here To add Comment..." required>
